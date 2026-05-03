@@ -1,184 +1,134 @@
-# 📋 TaskFlow — Team Task Manager
+# 📋 TaskFlow — Team Task Manager (Full-Stack Assignment)
 
-A full-stack collaborative task management web application built with **React (Vite)** and **FastAPI**, similar to Trello/Asana.
+**TaskFlow** is a full-stack collaborative team task management web application built with **React** and **FastAPI**, designed to mimic core functionalities of tools like Trello or Asana. 
 
-> Manage projects, assign tasks, track progress — with role-based access control.
-
----
-
-## 🚀 Features
-
-- **JWT Authentication** — Secure signup & login with bcrypt password hashing
-- **Project Management** — Create projects, add/remove team members
-- **Task Management** — Create tasks with title, description, due date, priority; assign to team members
-- **Kanban Board** — Visual task board with To Do / In Progress / Done columns
-- **Dashboard Analytics** — Total tasks, status breakdown, overdue count, tasks per user
-- **Role-Based Access**:
-  - **Admin** → Create tasks, manage members
-  - **Member** → View and update only assigned tasks
+It features secure JWT authentication, a premium dark-themed UI, Kanban-style task boards, and strict role-based access control.
 
 ---
 
-## 🛠 Tech Stack
+## 🔗 Live Links (Submission)
 
-| Layer | Technology |
-|-------|-----------|
-| Frontend | React 19, Vite, Axios, React Router v7 |
-| Backend | FastAPI, Python |
-| Database | PostgreSQL + SQLAlchemy ORM |
-| Auth | JWT (python-jose) + bcrypt |
-| Deployment | Railway |
+- **🌍 Live Application URL:** `[INSERT YOUR RAILWAY FRONTEND URL HERE]`
+- **📹 Demo Video:** `[INSERT YOUR YOUTUBE/LOOM VIDEO LINK HERE]`
+- **💻 GitHub Repository:** `[INSERT YOUR GITHUB REPO URL HERE]`
+
+*(Note to Evaluator: The application is deployed on Railway using a live PostgreSQL database. Please feel free to sign up and test the application!)*
 
 ---
 
-## 📂 Project Structure
+## ✨ Key Features & Requirements Met
 
-```
+| Requirement | Implementation Details |
+|-------------|-------------------------|
+| **Authentication** | Secure Signup & Login using **JWT (JSON Web Tokens)** and **bcrypt** password hashing. |
+| **Project Management** | Users can create projects (becoming the Admin) and invite registered users to join via email. |
+| **Task Management** | Full CRUD for tasks. Includes Title, Description, Due Date, and Priority levels (Low/Medium/High). |
+| **Role-Based Access** | **Admins:** Can create tasks, add/remove members, update any task.<br>**Members:** Can view project details but can *only* update the status of tasks assigned to them. |
+| **Dashboard Analytics** | Tracks total tasks, status breakdowns (To Do, In Progress, Done), overdue tasks, and task distribution per user. |
+| **Kanban UI** | Premium, glassmorphic UI with drag-and-drop style columns for task tracking. |
+| **Deployment** | Backend and Frontend deployed independently on **Railway**, connected to a live **PostgreSQL** database. |
+
+---
+
+## 🛠 Technology Stack
+
+### Frontend
+- **Framework:** React 19 (Vite)
+- **Routing:** React Router v7
+- **HTTP Client:** Axios (with custom interceptors for auto-attaching JWTs and handling 401s)
+- **Styling:** Custom Vanilla CSS (Dark mode, CSS variables, flexbox/grid)
+
+### Backend
+- **Framework:** FastAPI (Python)
+- **Database:** PostgreSQL (Live on Railway)
+- **ORM:** SQLAlchemy
+- **Authentication:** `python-jose` (JWT), `bcrypt` (Hashing)
+
+---
+
+## 📂 Project Architecture
+
+```text
 team-task-manager/
 ├── backend/
 │   ├── app/
-│   │   ├── auth/         # Signup, Login, JWT utils
-│   │   ├── projects/     # Project CRUD + member management
-│   │   ├── tasks/        # Task CRUD + status updates
-│   │   ├── dashboard/    # Analytics API
-│   │   ├── db.py         # SQLAlchemy engine + session
-│   │   ├── models.py     # User, Project, Task, ProjectMember
-│   │   ├── schemas.py    # Pydantic request/response schemas
-│   │   └── main.py       # FastAPI app + CORS + routers
-│   ├── .env
+│   │   ├── auth/         # Routes & Utils for JWT and Password Hashing
+│   │   ├── projects/     # Project creation and Member management APIs
+│   │   ├── tasks/        # Task creation and Status update APIs
+│   │   ├── dashboard/    # Analytics and metrics generation
+│   │   ├── db.py         # SQLAlchemy Engine & Session configuration
+│   │   ├── models.py     # Database schema (User, Project, Task, ProjectMember)
+│   │   └── schemas.py    # Pydantic models for validation and serialization
 │   ├── requirements.txt
-│   ├── Procfile
-│   └── railway.toml
+│   ├── Procfile          # Railway deployment config
+│   └── nixpacks.toml     # Railway build config
+│
 ├── frontend/
 │   ├── src/
-│   │   ├── api/          # Axios instance with interceptors
-│   │   ├── context/      # AuthContext (token + user + role)
-│   │   ├── components/   # Navbar, ProtectedRoute
-│   │   ├── pages/        # Login, Signup, Dashboard, ProjectView
-│   │   └── index.css     # Design system (dark theme)
+│   │   ├── api/          # Axios instance config
+│   │   ├── context/      # AuthContext for global state management
+│   │   ├── components/   # Reusable UI (Navbar, Protected Routes)
+│   │   ├── pages/        # Dashboard, ProjectView, Login, Signup
+│   │   └── index.css     # Global Design System
 │   ├── package.json
 │   └── vite.config.js
-└── README.md
 ```
 
 ---
 
-## ⚙️ Local Setup
+## ⚙️ How to Run Locally
 
-### Prerequisites
-- Python 3.10+
-- Node.js 18+
-- PostgreSQL database
+If you wish to run the project on your local machine, follow these steps:
 
-### 1. Backend
+### 1. Database Setup
+Ensure you have PostgreSQL installed and running on your machine. Create a new database named `taskmanager`.
 
+### 2. Backend Setup
 ```bash
 cd backend
 
-# Create virtual environment
+# Create a virtual environment
 python -m venv venv
-venv\Scripts\activate        # Windows
-# source venv/bin/activate   # Mac/Linux
+venv\Scripts\activate      # Windows
+# source venv/bin/activate # Mac/Linux
 
 # Install dependencies
 pip install -r requirements.txt
 
-# Configure environment
-# Edit .env with your database URL and secret key:
-# DATABASE_URL=postgresql://user:password@localhost:5432/taskmanager
-# SECRET_KEY=your-secret-key-here
+# Create a .env file and add your credentials
+echo "DATABASE_URL=postgresql://postgres:password@localhost:5432/taskmanager" > .env
+echo "SECRET_KEY=your_super_secret_key" >> .env
+echo "CORS_ORIGINS=http://localhost:5173" >> .env
 
-# Run server
+# Run the FastAPI server
 uvicorn app.main:app --reload
 ```
+The backend will run at `http://127.0.0.1:8000`. You can view the automatic API documentation at `http://127.0.0.1:8000/docs`.
 
-Backend runs at `http://127.0.0.1:8000`
-API docs at `http://127.0.0.1:8000/docs`
-
-### 2. Frontend
-
+### 3. Frontend Setup
 ```bash
 cd frontend
 
-# Install dependencies
+# Install Node dependencies
 npm install
 
-# Run dev server
+# Run the Vite development server
 npm run dev
 ```
-
-Frontend runs at `http://localhost:5173`
-
----
-
-## 🌐 Deployment on Railway
-
-### Backend Service
-1. Create a new service on Railway → connect GitHub repo
-2. Set root directory to `backend`
-3. Add environment variables:
-   - `DATABASE_URL` — Railway PostgreSQL connection string
-   - `SECRET_KEY` — random secret for JWT signing
-   - `CORS_ORIGINS` — your frontend Railway URL (e.g., `https://taskflow-frontend.up.railway.app`)
-
-### Frontend Service
-1. Create another service on Railway → same repo
-2. Set root directory to `frontend`
-3. Build command: `npm run build`
-4. Start command: `npx serve dist`
-5. Add environment variable:
-   - `VITE_API_URL` — your backend Railway URL (e.g., `https://taskflow-backend.up.railway.app`)
-
-### Database
-1. Add a PostgreSQL plugin in Railway
-2. Copy the connection string to your backend's `DATABASE_URL`
+The frontend will run at `http://localhost:5173`.
 
 ---
 
-## 📡 API Endpoints
+## 🚀 Deployment (Railway)
 
-| Method | Endpoint | Auth | Description |
-|--------|----------|------|-------------|
-| POST | `/auth/signup` | ❌ | Register new user |
-| POST | `/auth/login` | ❌ | Login, returns JWT |
-| POST | `/projects/` | ✅ | Create project |
-| GET | `/projects/my-projects` | ✅ | List user's projects |
-| GET | `/projects/{id}` | ✅ | Get project details |
-| GET | `/projects/members/{id}` | ✅ | List project members |
-| POST | `/projects/{id}/add-member?email=` | ✅ Admin | Add member by email |
-| DELETE | `/projects/{id}/remove-member/{uid}` | ✅ Admin | Remove member |
-| POST | `/tasks/{project_id}/create` | ✅ Admin | Create task |
-| GET | `/tasks/project/{project_id}` | ✅ | List project tasks |
-| PUT | `/tasks/{task_id}/status?status=` | ✅ | Update task status |
-| GET | `/tasks/my-tasks` | ✅ | Get user's assigned tasks |
-| GET | `/tasks/overdue/{project_id}` | ✅ | Get overdue tasks |
-| GET | `/dashboard/{project_id}` | ✅ | Get project analytics |
-
----
-
-## 👤 Roles
-
-| Role | Permissions |
-|------|-------------|
-| **Admin** | Create tasks, add/remove members, update any task status |
-| **Member** | View project, update status of assigned tasks only |
-
-The project creator automatically becomes Admin and is added as a member.
-
----
-
-## 📹 Demo Video
-
-A 2-5 minute walkthrough covering:
-1. Signup → Login flow
-2. Creating a project
-3. Adding members
-4. Creating and assigning tasks
-5. Updating task status (as admin and as member)
-6. Dashboard analytics view
+The application is deployed across three services on Railway:
+1. **PostgreSQL Database:** Hosts the live data.
+2. **Backend Service:** Runs the FastAPI server. Uses `Procfile` and `requirements.txt`.
+   - Environment Variables: `DATABASE_URL`, `SECRET_KEY`, `CORS_ORIGINS` (Set to Frontend URL).
+3. **Frontend Service:** Runs the built React application.
+   - Environment Variables: `VITE_API_URL` (Set to Backend URL).
 
 ---
 
 ## 📝 License
-
-This project was built as part of a full-stack development assignment.
+Created as a Full-Stack Coding Assignment submission.
