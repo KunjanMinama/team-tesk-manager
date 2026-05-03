@@ -8,9 +8,9 @@ It features secure JWT authentication, a premium dark-themed UI, Kanban-style ta
 
 ## 🔗 Live Links (Submission)
 
-- **🌍 Live Application URL:** `[INSERT YOUR RAILWAY FRONTEND URL HERE]`
+- **🌍 Live Application URL:** `team-task-manager-df70.up.railway.app`
 - **📹 Demo Video:** `[INSERT YOUR YOUTUBE/LOOM VIDEO LINK HERE]`
-- **💻 GitHub Repository:** `[INSERT YOUR GITHUB REPO URL HERE]`
+- **💻 GitHub Repository:** `https://github.com/KunjanMinama/team-tesk-manager`
 
 *(Note to Evaluator: The application is deployed on Railway using a live PostgreSQL database. Please feel free to sign up and test the application!)*
 
